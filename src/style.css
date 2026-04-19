@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Space Grotesk', sans-serif;
+}
+
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
@@ -34,4 +39,5 @@
   --border: 0.5px;
   --depth: 0;
   --noise: 1;
+  --font-family: 'Space Grotesk', sans-serif;
 }
