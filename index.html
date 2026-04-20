@@ -26,13 +26,53 @@
 
     <header class="border-b border-base-300 bg-base-100 shadow-sm">
       <nav class="navbar px-4 max-w-7xl mx-auto" aria-label="Main navigation">
-        <div class="navbar-start">
-          <a href="/" class="flex items-center gap-2 mr-4">
-            <img src="/favicon.svg" alt="" aria-hidden="true" class="h-6 w-6" />
-            <span class="text-xl"><em class="font-bold">mono</em>share</span>
+        <div class="navbar-start gap-4">
+          <div class="dropdown block md:hidden">
+            <button
+              tabindex="0"
+              class="btn btn-ghost btn-circle"
+              aria-label="Open menu"
+              aria-haspopup="true"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5"
+                aria-hidden="true"
+              >
+                <path d="M4 5h16" />
+                <path d="M4 12h16" />
+                <path d="M4 19h16" />
+              </svg>
+            </button>
+            <ul
+              tabindex="-1"
+              class="menu dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li><a href="/">Home</a></li>
+              <li>
+                <a href="#/my-monos"><em class="font-bold">mono</em> Saya</a>
+              </li>
+            </ul>
+          </div>
+
+          <a
+            href="/"
+            class="flex items-center gap-1 mr-4"
+            aria-label="monoshare home"
+          >
+            <img src="/favicon.svg" alt="" aria-hidden="true" class="h-5 w-5" />
+            <span translate="no"><em class="font-bold">mono</em>share</span>
           </a>
 
-          <ul class="menu menu-horizontal px-1 gap-2 hidden sm:flex">
+          <ul class="menu menu-horizontal px-1 gap-2 hidden md:flex">
             <li><a href="/">Home</a></li>
             <li>
               <a href="#/my-monos"><em class="font-bold">mono</em> Saya</a>
