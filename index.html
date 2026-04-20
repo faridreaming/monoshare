@@ -24,34 +24,27 @@
       Skip to Content
     </a>
 
-    <header class="border-b border-base-300">
-      <nav
-        class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-4"
-        aria-label="Main navigation"
-      >
-        <div class="flex items-center gap-6">
-          <a href="/" class="flex items-center gap-2">
+    <header class="border-b border-base-300 bg-base-100 shadow-sm">
+      <nav class="navbar px-4 max-w-7xl mx-auto" aria-label="Main navigation">
+        <div class="navbar-start">
+          <a href="/" class="flex items-center gap-2 mr-4">
             <img src="/favicon.svg" alt="" aria-hidden="true" class="h-6 w-6" />
-            <span><strong class="italic">mono</strong>share</span>
+            <span class="text-xl"><em class="font-bold">mono</em>share</span>
           </a>
 
-          <ul class="flex items-center gap-2">
+          <ul class="menu menu-horizontal px-1 gap-2 hidden sm:flex">
+            <li><a href="/">Home</a></li>
             <li>
-              <a href="#/monos" class="btn btn-ghost font-normal"
-                >Daftar <strong class="italic">mono</strong></a
-              >
-            </li>
-            <li>
-              <a href="#/my-monos" class="btn btn-ghost font-normal"
-                ><strong class="italic">mono</strong> Saya</a
-              >
+              <a href="#/my-monos"><em class="font-bold">mono</em> Saya</a>
             </li>
           </ul>
         </div>
 
-        <button id="logout-button" class="btn btn-error text-white btn-sm">
-          Logout
-        </button>
+        <div class="navbar-end">
+          <button id="logout-button" class="btn btn-error text-white btn-sm">
+            Logout
+          </button>
+        </div>
       </nav>
     </header>
 
