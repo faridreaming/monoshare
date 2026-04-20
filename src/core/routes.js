@@ -1,9 +1,11 @@
 import HomePresenter from '../presenters/HomePresenter'
+import MonoPresenter from '../presenters/MonoPresenter'
 import NotFoundPresenter from '../presenters/NotFoundPresenter'
 
 const routes = {
   '/': new HomePresenter(),
   '/*': new NotFoundPresenter(),
+  '/monos': new MonoPresenter(),
 }
 
 export const getRoute = () => {

@@ -1,3 +1,7 @@
+import NotFoundView from '../views/NotFoundView'
+
 export default class NotFoundPresenter {
-  init() {}
+  init() {
+    NotFoundView.render()
+  }
 }
