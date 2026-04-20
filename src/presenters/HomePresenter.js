@@ -1,3 +1,7 @@
+import HomeView from '../views/HomeView'
+
 export default class HomePresenter {
-  init() {}
+  init() {
+    HomeView.render()
+  }
 }
