@@ -5,7 +5,17 @@ export default class MonoView {
       <div class="drawer h-full w-full drawer-open">
         <input id="my-drawer-4" type="checkbox" class="drawer-toggle" checked />
         <div class="drawer-content h-full">
-          <div class="p-4">Page Content</div>
+          <section class="h-full p-3 md:p-4 flex flex-col gap-3">
+            <div id="mono-filter" class="border border-base-300 bg-base-100 p-3">
+              <button class="btn btn-ghost btn-sm">Filter</button>
+            </div>
+
+            <div id="mono-map" class="flex-1 border border-base-300 bg-base-200">
+              <div class="h-full w-full grid place-items-center text-sm opacity-70">
+                Map placeholder
+              </div>
+            </div>
+          </section>
         </div>
 
         <div class="drawer-side is-drawer-close:overflow-visible h-full">
