@@ -2,7 +2,7 @@ export default class HomeView {
   static render() {
     const app = document.getElementById('app')
     app.innerHTML = `
-      <section class="relative overflow-hidden rounded-3xl min-h-[50vh] flex items-center">
+      <section class="relative overflow-hidden min-h-[50vh] flex items-center">
         <div id="map" class="absolute inset-0"></div>
         <div class="absolute inset-0 bg-white/5"></div>
 
