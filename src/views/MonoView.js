@@ -3,7 +3,7 @@ export default class MonoView {
     const app = document.getElementById('app')
     app.innerHTML = `
       <div class="drawer h-full w-full drawer-open">
-        <input id="my-drawer-4" type="checkbox" class="drawer-toggle" checked />
+        <input id="mono-drawer" type="checkbox" class="drawer-toggle" checked />
         <div class="drawer-content h-full">
           <section class="h-full p-3 md:p-4 flex flex-col gap-3">
             <div id="mono-filter" class="border border-base-300 bg-base-100 p-3">
@@ -19,29 +19,21 @@ export default class MonoView {
         </div>
 
         <div class="drawer-side is-drawer-close:overflow-visible h-full">
-          <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+          <label for="mono-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
           <div class="flex h-full flex-col items-start border-r border-base-300 is-drawer-close:w-14 is-drawer-open:w-64">
-            <ul class="menu w-full grow">
-              <li>
-                <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
+            <div class="p-2 w-full grid grid-cols-1">
+              <span class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></span>
+              <div class="col-start-1 row-start-1 flex justify-end">
+                <label for="mono-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost row-start-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-panel-left-icon lucide-panel-left h-4 w-4">
+                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                    <path d="M9 3v18" />
+                  </svg>
                 </label>
-              </li>
-              
-              <li>
-                <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                  <span class="is-drawer-close:hidden">Homepage</span>
-                </button>
-              </li>
-
-              <li>
-                <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor" class="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-                  <span class="is-drawer-close:hidden">Settings</span>
-                </button>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
