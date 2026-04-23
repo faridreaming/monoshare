@@ -1,5 +1,6 @@
 import L from 'leaflet'
 import MonoView from '../views/MonoView'
+import getMonos from '../models/MonoMockModel'
 
 export default class MonoPresenter {
   init() {
