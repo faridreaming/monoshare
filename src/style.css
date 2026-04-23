@@ -38,6 +38,6 @@
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 0;
-  --noise: 1;
+  --noise: 0;
   --font-family: 'Space Grotesk', sans-serif;
 }
