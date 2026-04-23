@@ -19,7 +19,7 @@ export default class HomeView {
               <path d="M15 5.764v15" />
               <path d="M9 3.236v15" />
             </svg>
-            Jelajahi Peta
+            Jelajah Peta
           </a>
         </div>
       </section>
