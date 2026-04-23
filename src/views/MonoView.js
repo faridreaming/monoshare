@@ -18,7 +18,7 @@ export default class MonoView {
           <label for="mono-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
           <div class="flex h-full flex-col items-start border-r border-base-300 is-drawer-close:w-14 is-drawer-open:w-64">
             <div class="p-2 w-full grid grid-cols-1">
-              <span class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></span>
+              <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
               <div class="col-start-1 row-start-1 flex justify-end">
                 <label for="mono-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost row-start-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
