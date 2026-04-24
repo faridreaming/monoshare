@@ -1,16 +1,16 @@
 export default class HomeView {
-  static render(monos) {
+  static render(monos = []) {
     const app = document.getElementById('app')
     app.innerHTML = `
       <section class="relative overflow-hidden min-h-[50vh] flex items-center">
         <div id="map" class="absolute inset-0"></div>
-        <div class="absolute inset-0 bg-white/5"></div>
+        <div class="absolute inset-0 bg-base-300"></div>
 
         <div class="relative z-10 flex w-full flex-col items-center justify-center p-6 md:p-10 text-center">
-          <h1 class="text-2xl">
+          <h1 class="text-lg md:text-2xl">
             Temukan <em class="font-bold">mono</em> di sekitarmu<strong>.</strong>
           </h1>
-          <a href="#/monos" class="btn mt-4 btn-primary">
+          <a href="#/monos" class="btn mt-4 btn-primary btn-sm md:btn-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-map-icon lucide-map h-4 w-4">
@@ -26,8 +26,8 @@ export default class HomeView {
 
       <section class="p-8">
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl">Daftar <em class="font-bold">mono</em></h2>
-          <button class="btn gap-2 btn-primary">
+          <h2 class="text-lg md:text-2xl">Daftar <em class="font-bold">mono</em></h2>
+          <button class="btn gap-2 btn-primary btn-sm md:btn-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-plus-icon lucide-plus h-4 w-4">
@@ -37,16 +37,93 @@ export default class HomeView {
             Tambah <em>mono</em>
           </button>
         </div>
-        <div role="alert" class="alert mt-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-info-icon lucide-info">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 16v-4" />
-            <path d="M12 8h.01" />
-          </svg>
-          <span>Belum ada mono.</span>
-        </div>
+        ${
+          monos.length === 0
+            ? `
+              <div role="alert" class="alert mt-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-info-icon lucide-info h-4.5 w-4.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4" />
+                  <path d="M12 8h.01" />
+                </svg>
+                <span>Belum ada <em class="font-bold">mono</em>. Tambahkan <em class="font-bold">mono</em> pertamamu.</span>
+              </div>
+            `
+            : `
+              <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                ${monos
+                  .map(
+                    (mono) => `
+                  <div class="card bg-base-300 w-full shadow-sm">
+                    <div class="flex items-center gap-2 p-4">
+                      <div class="avatar avatar-placeholder">
+                        <div class="bg-neutral text-neutral-content w-12 rounded-full text-lg font-bold">
+                          ${mono.name
+                            .trim()
+                            .split(/\s+/)
+                            .map((word) => word[0])
+                            .join('')
+                            .toUpperCase()
+                            .substring(0, 2)}
+                        </div>
+                      </div>
+                      <div>
+                        <h3 class="card-title">${mono.name}</h3>
+                        <time class="text-xs">
+                          ${new Date(mono.createdAt)
+                            .toLocaleString('id-ID', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              hour12: false,
+                            })
+                            .replace(' pukul ', ', ')
+                            .replace(/\./g, ':')}
+                        </time>
+                      </div>
+                    </div>
+                    <figure>
+                      <img
+                        class="aspect-video object-cover w-full"
+                        src="${mono.photoUrl}"
+                        alt="Shoes" />
+                    </figure>
+                    <div class="card-body p-4 gap-8">
+                      <span class="badge badge-outline badge-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="lucide lucide-map-pin-icon lucide-map-pin h-3 w-3">
+                          <path
+                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                          <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        ${mono.lat}, ${mono.lon}
+                      </span>
+                      <p class="italic flex-1">${mono.description}</p>
+                      <div class="card-actions justify-end">
+                        <button class="btn btn-primary btn-sm w-full">
+                          Selengkapnya
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-arrow-right-icon lucide-arrow-right h-4 w-4">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                `,
+                  )
+                  .join('')}
+              </div>
+            `
+        }
+        
       </section>
     `
   }
