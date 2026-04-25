@@ -1,11 +1,15 @@
 import HomePresenter from '../presenters/HomePresenter'
+import LoginPresenter from '../presenters/LoginPresenter'
 import MonoPresenter from '../presenters/MonoPresenter'
 import NotFoundPresenter from '../presenters/NotFoundPresenter'
+import RegisterPresenter from '../presenters/RegisterPresenter'
 
 const routes = {
   '/': new HomePresenter(),
   '/*': new NotFoundPresenter(),
   '/monos': new MonoPresenter(),
+  '/login': new LoginPresenter(),
+  '/register': new RegisterPresenter(),
 }
 
 export const getRoute = () => {
