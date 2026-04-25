@@ -29,7 +29,7 @@
     >
       <nav class="navbar px-4 md:px-8" aria-label="Main navigation">
         <div class="navbar-start gap-4">
-          <details class="dropdown block lg:hidden">
+          <details id="navbar-mobile-dropdown" class="dropdown block lg:hidden">
             <summary
               class="btn btn-ghost btn-square"
               aria-label="Open menu"
@@ -55,6 +55,7 @@
               </svg>
             </summary>
             <ul
+              id="navbar-mobile-menu"
               class="menu dropdown-content bg-base-200 rounded-box z-50 mt-3 w-52 p-2 shadow border border-base-300"
             >
               <li>
@@ -119,7 +120,10 @@
                 ><strong class="italic">mono</strong>share</span
               >
             </a>
-            <ul class="menu menu-horizontal text-base p-0 hidden lg:flex">
+            <ul
+              id="navbar-desktop-menu"
+              class="menu menu-horizontal text-base p-0 hidden lg:flex"
+            >
               <li>
                 <a href="#/">
                   <svg
@@ -171,7 +175,7 @@
           </div>
         </div>
 
-        <div class="navbar-end">
+        <div id="auth-action" class="navbar-end">
           <button
             id="logout-button"
             class="btn btn-error gap-2 btn-xs md:btn-sm"
