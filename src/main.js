@@ -1,4 +1,5 @@
 import { getRoute } from './core/routes'
+import { setupNavbar } from './utils/navbar'
 import 'leaflet/dist/leaflet.css'
 
 const handleRouteChange = () => {
@@ -27,4 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
       details.open = false
     }
   })
+
+  setupNavbar()
 })
