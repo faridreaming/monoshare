@@ -21,7 +21,8 @@ export default function getMonos() {
     {
       id: 'story-i9J0k1L2m3N4o5P6',
       name: 'Raka',
-      description: 'Pemandangan sore di pantai keren banget.',
+      description:
+        'Pemandangan sore di pantai keren banget. Jadi pengen makan mie gacoan wkwk. tapi kita gatau kapan kita bisa makan mie gacoan.',
       photoUrl: 'https://dummyimage.com/600x600/444/fff',
       createdAt: '2022-01-10T11:22:33.456Z',
       lat: -8.65,
