@@ -11,20 +11,20 @@ window.addEventListener('hashchange', handleRouteChange)
 
 document.addEventListener('DOMContentLoaded', () => {
   const details = document.querySelector('details.dropdown')
-  const summary = details?.querySelector('summary')
+  const summary = details.querySelector('summary')
 
-  details?.addEventListener('toggle', () => {
-    summary?.setAttribute('aria-expanded', String(details.open))
+  details.addEventListener('toggle', () => {
+    summary.setAttribute('aria-expanded', String(details.open))
   })
 
-  details?.querySelectorAll('a').forEach((link) => {
+  details.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       details.open = false
     })
   })
 
   document.addEventListener('click', (e) => {
-    if (!details?.contains(e.target)) {
+    if (!details.contains(e.target)) {
       details.open = false
     }
   })
