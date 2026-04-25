@@ -1,5 +1,5 @@
 export default class LoginView {
-  static render() {
+  static render(onSubmit) {
     const app = document.getElementById('app')
     app.innerHTML = `
       <div class="flex h-full justify-center items-center">
@@ -24,5 +24,6 @@ export default class LoginView {
         </div>
       </div>
     `
+    app.querySelector('form').addEventListener('submit', onSubmit)
   }
 }
