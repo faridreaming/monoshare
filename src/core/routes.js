@@ -15,17 +15,22 @@ const routes = {
 
 export const getRoute = () => {
   const hash = location.hash.slice(1) || '/'
+  const footer = document.querySelector('footer')
 
   const protectedRoutes = ['/', '/monos']
   const guestRoutes = ['/login', '/register']
 
   if (protectedRoutes.includes(hash)) {
     if (!isLoggedIn()) {
+      footer.classList.remove('hidden')
       history.replaceState(null, '', '#/login')
       return routes['/login']
     }
+    footer.classList.toggle('hidden', hash === '/monos')
     return routes[hash]
   }
+
+  footer.classList.remove('hidden')
 
   if (guestRoutes.includes(hash)) {
     if (isLoggedIn()) {
