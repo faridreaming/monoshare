@@ -1,8 +1,22 @@
+import { getMonos } from '../models/MonoModel'
 import HomeView from '../views/HomeView'
-import getMonos from '../models/MonoMockModel'
-
 export default class HomePresenter {
-  init() {
-    HomeView.render(getMonos())
+  async init() {
+    HomeView.render()
+    HomeView.renderLoading()
+
+    try {
+      const data = await getMonos({ location: 1, page: 1 })
+
+      if (data.error) {
+        alert(`Error: ${data.message}`)
+        return
+      }
+
+      const monos = data.listStory
+      HomeView.renderList(monos)
+    } catch (error) {
+      alert(`Error fetching data: ${error}`)
+    }
   }
 }
