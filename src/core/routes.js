@@ -3,6 +3,7 @@ import LoginPresenter from '../presenters/LoginPresenter'
 import MonoPresenter from '../presenters/MonoPresenter'
 import NotFoundPresenter from '../presenters/NotFoundPresenter'
 import RegisterPresenter from '../presenters/RegisterPresenter'
+import { isLoggedIn } from '../utils/auth'
 
 const routes = {
   '/': new HomePresenter(),
@@ -15,7 +16,22 @@ const routes = {
 export const getRoute = () => {
   const hash = location.hash.slice(1) || '/'
 
-  if (routes[hash]) {
+  const protectedRoutes = ['/', '/monos']
+  const guestRoutes = ['/login', '/register']
+
+  if (protectedRoutes.includes(hash)) {
+    if (!isLoggedIn()) {
+      history.replaceState(null, '', '#/login')
+      return routes['/login']
+    }
+    return routes[hash]
+  }
+
+  if (guestRoutes.includes(hash)) {
+    if (isLoggedIn()) {
+      history.replaceState(null, '', '#/')
+      return routes['/']
+    }
     return routes[hash]
   }
 
