@@ -1,3 +1,4 @@
+import { register } from '../services/storyService'
 import RegisterView from '../views/RegisterView'
 
 export default class RegisterPresenter {
@@ -5,7 +6,20 @@ export default class RegisterPresenter {
     RegisterView.render(this.onSubmit)
   }
 
-  onSubmit = ({ name, email, password }) => {
-    console.log({ name, email, password })
+  onSubmit = async ({ name, email, password }) => {
+    try {
+      const data = await register({ name, email, password })
+
+      if (data.error) {
+        alert(`Error: ${data.message}`)
+        return
+      }
+
+      alert(data.message)
+
+      location.hash = '#/login'
+    } catch (error) {
+      alert(`Error fetching data: ${error}`)
+    }
   }
 }
