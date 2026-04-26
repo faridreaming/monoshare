@@ -1,4 +1,4 @@
-import { isLoggedIn } from './auth'
+import { isLoggedIn, removeToken } from './auth'
 
 export function setupNavbar() {
   const navbarMobileDropdown = document.getElementById('navbar-mobile-dropdown')
@@ -82,6 +82,17 @@ export function setupNavbar() {
         Logout
       </button>
     `
+
+    const logoutButton = authAction.querySelector('#logout-button')
+
+    logoutButton.addEventListener('click', () => {
+      const confirmLogout = confirm('Apakah anda yakin ingin keluar?')
+
+      if (confirmLogout) {
+        removeToken()
+        location.hash = '#/login'
+      }
+    })
   } else {
     navbarMobileDropdown.classList.remove('block')
     navbarMobileDropdown.classList.add('hidden')

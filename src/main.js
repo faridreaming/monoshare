@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css'
 
 const handleRouteChange = () => {
   getRoute().init()
+  setupNavbar()
 }
 
 handleRouteChange()
