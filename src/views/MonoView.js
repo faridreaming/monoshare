@@ -14,9 +14,8 @@ export default class MonoView {
           </section>
         </div>
 
-        <div class="drawer-side is-drawer-close:overflow-visible h-full">
-          <label for="mono-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-          <div class="grid grid-rows-[auto_1fr] h-full items-start border-r border-base-300 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div class="drawer-side is-drawer-close:overflow-visible top-[64.8px] h-[calc(100dvh-64.8px)] border-r border-base-300">
+          <div class="grid grid-rows-[auto_1fr] h-full items-start is-drawer-close:w-14 is-drawer-open:w-64 min-h-0">
             <div class="p-2 w-full grid grid-cols-1">
               <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
               <div class="col-start-1 row-start-1 flex justify-end">
@@ -30,7 +29,7 @@ export default class MonoView {
                 </label>
               </div>
             </div>
-            <div id="mono-list-sidebar" class="h-full"></div>
+            <div id="mono-list-sidebar" class="min-h-0 overflow-y-auto"></div>
           </div>
         </div>
       </div>
