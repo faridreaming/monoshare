@@ -120,7 +120,7 @@ export default class HomeView {
                       </svg>
                       ${mono.lat}, ${mono.lon}
                     </span>
-                    <p class="italic flex-1">${mono.description}</p>
+                    <p class="italic flex-1">${mono.description?.length > 50 ? `${mono.description.substring(0, 100)}...` : mono.description}</p>
                     <div class="card-actions justify-end">
                       <button class="btn btn-primary btn-sm" aria-label="Selengkapnya tentang ${mono.description.substring(0, 50)}...">
                         Selengkapnya
