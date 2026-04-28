@@ -6,28 +6,29 @@ import { delay } from '../utils/delay'
 export default class MonoPresenter {
   async init() {
     MonoView.render()
-    MonoView.renderLoading()
+    MonoView.showLoading()
 
     try {
-      await delay(3000)
       const data = await getMonos({ location: 1, page: 1, size: 9999 })
 
       if (data.error) {
-        alert(`Error: ${data.message}`)
-        return
+        throw new Error(data.message)
       }
 
       const monos = data.listStory
-      MonoView.renderMap()
-      this.#initMap()
-      MonoView.renderList()
+
+      this.#initMap(monos)
+      MonoView.renderList(monos)
     } catch (error) {
-      alert(`Error fetching data: ${error}`)
+      MonoView.hideLoading()
+      alert(error.message)
     }
   }
 
-  #initMap() {
-    const map = L.map('mono-map').setView([-6.2, 106.816], 11)
+  #initMap(monos = []) {
+    const monoMapEl = document.getElementById('mono-map')
+    monoMapEl.innerHTML = ''
+    const map = L.map(monoMapEl).setView([-6.2, 106.816], 11)
 
     L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
@@ -39,7 +40,8 @@ export default class MonoPresenter {
       },
     ).addTo(map)
 
-    L.marker([-6.2, 106.816]).addTo(map).bindPopup('Mono A')
-    L.marker([-6.17, 106.83]).addTo(map).bindPopup('Mono B')
+    monos.forEach((mono) => {
+      L.marker([mono.lat, mono.lon]).addTo(map).bindPopup(mono.name)
+    })
   }
 }

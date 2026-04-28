@@ -37,7 +37,7 @@ export default class MonoView {
     `
   }
 
-  static renderLoading() {
+  static showLoading() {
     const monoListSidebarEl = document.getElementById('mono-list-sidebar')
     const monoMapEl = document.getElementById('mono-map')
 
@@ -51,12 +51,12 @@ export default class MonoView {
     monoMapEl.innerHTML = loadingEl
   }
 
-  static renderMap() {
-    const monoMapEl = document.getElementById('mono-map')
-    monoMapEl.innerHTML = ''
+  static hideLoading() {
+    const monoListSidebarEl = document.getElementById('mono-list-sidebar')
+    monoListSidebarEl.innerHTML = ''
   }
 
-  static renderList() {
+  static renderList(monos = []) {
     const monoListSidebarEl = document.getElementById('mono-list-sidebar')
   }
 }
