@@ -42,13 +42,18 @@ export default class HomeView {
     `
   }
 
-  static renderLoading() {
+  static showLoading() {
     const monoListEl = document.getElementById('mono-list')
     monoListEl.innerHTML = `
       <div class="h-full flex items-center justify-center">
           <span class="loading loading-spinner loading-xl"></span>
       </div>
     `
+  }
+
+  static hideLoading() {
+    const monoListEl = document.getElementById('mono-list')
+    monoListEl.innerHTML = ''
   }
 
   static renderList(monos = []) {
