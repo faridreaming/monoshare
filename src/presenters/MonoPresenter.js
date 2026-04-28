@@ -29,6 +29,16 @@ export default class MonoPresenter {
     const monoMapEl = document.getElementById('mono-map')
     monoMapEl.innerHTML = ''
     const map = L.map(monoMapEl).setView([-6.2, 106.816], 11)
+    const monoIcon = L.divIcon({
+      className: 'mono-marker',
+      html: `
+        <div class="mono-marker__pulse"></div>
+        <div class="mono-marker__core"></div>
+      `,
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -14],
+    })
 
     L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
@@ -41,7 +51,9 @@ export default class MonoPresenter {
     ).addTo(map)
 
     monos.forEach((mono) => {
-      L.marker([mono.lat, mono.lon]).addTo(map).bindPopup(mono.name)
+      L.marker([mono.lat, mono.lon], { icon: monoIcon })
+        .addTo(map)
+        .bindPopup(mono.name)
     })
   }
 }
