@@ -4,6 +4,9 @@ import { getMonos } from '../models/MonoModel'
 import { delay } from '../utils/delay'
 
 export default class MonoPresenter {
+  #monos = []
+  #map = null
+
   async init() {
     MonoView.render()
     MonoView.showLoading()
@@ -15,20 +18,22 @@ export default class MonoPresenter {
         throw new Error(data.message)
       }
 
-      const monos = data.listStory
-
-      this.#initMap(monos)
-      MonoView.renderList(monos)
+      this.#monos = data.listStory
+      this.#initMap(this.#monos)
+      MonoView.renderList(this.#monos)
+      this.#map.on('moveend', () => {
+        this.#filterByBounds()
+      })
     } catch (error) {
       MonoView.hideLoading()
       alert(error.message)
     }
   }
 
-  #initMap(monos = []) {
+  #initMap(monos = this.#monos) {
     const monoMapEl = document.getElementById('mono-map')
     monoMapEl.innerHTML = ''
-    const map = L.map(monoMapEl).setView([-6.2, 106.816], 11)
+    this.#map = L.map(monoMapEl).setView([-6.2, 106.816], 11)
     const monoIcon = L.divIcon({
       className: 'mono-marker',
       html: `
@@ -47,12 +52,22 @@ export default class MonoPresenter {
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
       },
-    ).addTo(map)
+    ).addTo(this.#map)
 
     monos.forEach((mono) => {
       L.marker([mono.lat, mono.lon], { icon: monoIcon })
-        .addTo(map)
+        .addTo(this.#map)
         .bindPopup(mono.name)
     })
+
+    this.#filterByBounds()
+  }
+
+  #filterByBounds() {
+    const bounds = this.#map.getBounds()
+    const filteredMonos = this.#monos.filter((mono) =>
+      bounds.contains([mono.lat, mono.lon]),
+    )
+    MonoView.renderList(filteredMonos)
   }
 }
