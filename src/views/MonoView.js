@@ -55,44 +55,55 @@ export default class MonoView {
     monoListSidebarEl.innerHTML = ''
   }
 
-  static renderList(monos = []) {
+  static renderList(monos = [], onItemClick = () => {}) {
     const monoListSidebarEl = document.getElementById('mono-list-sidebar')
-    monoListSidebarEl.innerHTML =
-      monos.length === 0
-        ? `
-          <div role="alert" class="alert m-4 p-4 alert-vertical">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-info-icon lucide-info h-4.5 w-4.5" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 16v-4" />
-              <path d="M12 8h.01" />
-            </svg>
-            <span>Belum ada <em class="font-bold">mono</em>. Tambahkan <em class="font-bold">mono</em> pertamamu.</span>
-          </div>
-        `
-        : `
-          <ul class="p-4 space-y-4 w-full">
-            ${monos
-              .map(
-                (mono) => `
-                <li class="card card-xs card-side bg-base-200 card-border border-base-300 hover:bg-base-300 w-full min-w-0 overflow-hidden">
-                  <figure class="w-16 h-16 shrink-0">
-                    <img
-                      src="${mono.photoUrl}"
-                      alt="Foto ${mono.name}"
-                      alt="Foto dari ${mono.name}: ${mono.description.substring(0, 50)}..."
-                      loading="lazy" />
-                  </figure>
-                  <div class="card-body min-w-0">
-                    <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
-                    <p class="truncate">${mono.description}</p>
-                  </div>
-                </li>
-              `,
-              )
-              .join('')}
-          </ul>
-        `
+    if (monos.length === 0) {
+      monoListSidebarEl.innerHTML = `
+        <div role="alert" class="alert m-4 p-4 alert-vertical">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-info-icon lucide-info h-4.5 w-4.5" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          <span>Belum ada <em class="font-bold">mono</em>. Tambahkan <em class="font-bold">mono</em> pertamamu.</span>
+        </div>
+      `
+      return
+    }
+
+    const newList = monoListSidebarEl.cloneNode(false)
+    monoListSidebarEl.replaceWith(newList)
+
+    newList.innerHTML = `
+      <ul class="p-4 space-y-4 w-full">
+        ${monos
+          .map(
+            (mono) => `
+            <li class="card card-xs card-side bg-base-200 card-border border-base-300 hover:bg-base-300 w-full min-w-0 overflow-hidden" data-id="${mono.id}">
+              <figure class="w-16 h-16 shrink-0">
+                <img
+                  src="${mono.photoUrl}"
+                  alt="Foto ${mono.name}"
+                  alt="Foto dari ${mono.name}: ${mono.description.substring(0, 50)}..."
+                  loading="lazy" />
+              </figure>
+              <div class="card-body min-w-0">
+                <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
+                <p class="truncate">${mono.description}</p>
+              </div>
+            </li>
+          `,
+          )
+          .join('')}
+      </ul>
+    `
+
+    newList.addEventListener('click', (event) => {
+      const monoListItemEl = event.target.closest('li[data-id]')
+      if (!monoListItemEl) return
+      onItemClick(monoListItemEl.dataset.id)
+    })
   }
 }

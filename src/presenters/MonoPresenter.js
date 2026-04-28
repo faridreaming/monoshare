@@ -6,6 +6,7 @@ import { delay } from '../utils/delay'
 export default class MonoPresenter {
   #monos = []
   #map = null
+  #markers = new Map()
 
   async init() {
     MonoView.render()
@@ -20,7 +21,7 @@ export default class MonoPresenter {
 
       this.#monos = data.listStory
       this.#initMap(this.#monos)
-      MonoView.renderList(this.#monos)
+      MonoView.renderList(this.#monos, (id) => this.#navigateToMarker(id))
       this.#map.on('moveend', () => {
         this.#filterByBounds()
       })
@@ -55,10 +56,14 @@ export default class MonoPresenter {
     ).addTo(this.#map)
 
     monos.forEach((mono) => {
-      L.marker([mono.lat, mono.lon], { icon: monoIcon })
+      const marker = L.marker([mono.lat, mono.lon], { icon: monoIcon })
         .addTo(this.#map)
         .bindPopup(mono.name)
+
+      this.#markers.set(mono.id, marker)
     })
+
+    console.log(this.#markers)
 
     this.#filterByBounds()
   }
@@ -68,6 +73,13 @@ export default class MonoPresenter {
     const filteredMonos = this.#monos.filter((mono) =>
       bounds.contains([mono.lat, mono.lon]),
     )
-    MonoView.renderList(filteredMonos)
+    MonoView.renderList(filteredMonos, (id) => this.#navigateToMarker(id))
+  }
+
+  #navigateToMarker(id) {
+    const marker = this.#markers.get(id)
+    const markerLatLng = marker.getLatLng()
+    this.#map.flyTo(markerLatLng)
+    marker.openPopup()
   }
 }
