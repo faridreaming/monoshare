@@ -14,9 +14,9 @@ export default class MonoView {
           </section>
         </div>
 
-        <div class="drawer-side is-drawer-close:overflow-visible top-[64.8px] h-[calc(100dvh-64.8px)] border-r border-base-300">
-          <div class="grid grid-rows-[auto_1fr] h-full items-start is-drawer-close:w-14 is-drawer-open:w-64 min-h-0">
-            <div class="p-2 w-full grid grid-cols-1">
+        <div class="drawer-side is-drawer-close:overflow-visible overflow-hidden top-[64.8px] h-[calc(100dvh-64.8px)] border-r border-base-300">
+          <div class="grid grid-rows-[auto_1fr] h-full min-h-0 is-drawer-close:w-14 is-drawer-open:w-64">
+            <div class="p-2 w-full grid grid-cols-1 bg-base-200 border-b border-base-300 z-10">
               <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
               <div class="col-start-1 row-start-1 flex justify-end">
                 <label for="mono-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost row-start-1">
@@ -29,7 +29,7 @@ export default class MonoView {
                 </label>
               </div>
             </div>
-            <div id="mono-list-sidebar" class="min-h-0 overflow-y-auto"></div>
+            <div id="mono-list-sidebar" class="min-h-0 overflow-y-auto overflow-x-hidden is-drawer-close:hidden"></div>
           </div>
         </div>
       </div>
@@ -72,24 +72,27 @@ export default class MonoView {
           </div>
         `
         : `
-          ${monos.map(
-            (mono) => `
-              <div class="card card-side bg-base-100 shadow-sm">
-                <figure class="h-20 w-20 shrink-0">
-                  <img
-                    src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-                    alt="Movie" />
-                </figure>
-                <div class="card-body">
-                  <h2 class="card-title">New movie is released!</h2>
-                  <p>Click the button to watch on Jetflix app.</p>
-                  <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Watch</button>
+          <ul class="p-4 space-y-4 w-full">
+            ${monos
+              .map(
+                (mono) => `
+                <li class="card card-xs card-side bg-base-200 card-border border-base-300 hover:bg-base-300 w-full min-w-0 overflow-hidden">
+                  <figure class="w-16 h-16 shrink-0">
+                    <img
+                      src="${mono.photoUrl}"
+                      alt="Foto ${mono.name}"
+                      alt="Foto dari ${mono.name}: ${mono.description.substring(0, 50)}..."
+                      loading="lazy" />
+                  </figure>
+                  <div class="card-body min-w-0">
+                    <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
+                    <p class="truncate">${mono.description}</p>
                   </div>
-                </div>
-              </div>
-            `,
-          )}
+                </li>
+              `,
+              )
+              .join('')}
+          </ul>
         `
   }
 }
