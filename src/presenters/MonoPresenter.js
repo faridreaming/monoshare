@@ -1,11 +1,29 @@
 import L from 'leaflet'
 import MonoView from '../views/MonoView'
-import getMonos from '../models/MonoMockModel'
+import { getMonos } from '../models/MonoModel'
+import { delay } from '../utils/delay'
 
 export default class MonoPresenter {
-  init() {
+  async init() {
     MonoView.render()
-    this.#initMap()
+    MonoView.renderLoading()
+
+    try {
+      await delay(3000)
+      const data = await getMonos({ location: 1, page: 1, size: 9999 })
+
+      if (data.error) {
+        alert(`Error: ${data.message}`)
+        return
+      }
+
+      const monos = data.listStory
+      MonoView.renderMap()
+      this.#initMap()
+      MonoView.renderList()
+    } catch (error) {
+      alert(`Error fetching data: ${error}`)
+    }
   }
 
   #initMap() {

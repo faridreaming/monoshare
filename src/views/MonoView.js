@@ -16,7 +16,7 @@ export default class MonoView {
 
         <div class="drawer-side is-drawer-close:overflow-visible h-full">
           <label for="mono-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-          <div class="flex h-full flex-col items-start border-r border-base-300 is-drawer-close:w-14 is-drawer-open:w-64">
+          <div class="grid grid-rows-[auto_1fr] h-full items-start border-r border-base-300 is-drawer-close:w-14 is-drawer-open:w-64">
             <div class="p-2 w-full grid grid-cols-1">
               <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
               <div class="col-start-1 row-start-1 flex justify-end">
@@ -30,9 +30,33 @@ export default class MonoView {
                 </label>
               </div>
             </div>
+            <div id="mono-list-sidebar" class="h-full"></div>
           </div>
         </div>
       </div>
     `
+  }
+
+  static renderLoading() {
+    const monoListSidebarEl = document.getElementById('mono-list-sidebar')
+    const monoMapEl = document.getElementById('mono-map')
+
+    const loadingEl = `
+      <div class="h-full flex items-center justify-center">
+          <span class="loading loading-spinner loading-xl"></span>
+      </div>
+    `
+
+    monoListSidebarEl.innerHTML = loadingEl
+    monoMapEl.innerHTML = loadingEl
+  }
+
+  static renderMap() {
+    const monoMapEl = document.getElementById('mono-map')
+    monoMapEl.innerHTML = ''
+  }
+
+  static renderList() {
+    const monoListSidebarEl = document.getElementById('mono-list-sidebar')
   }
 }
