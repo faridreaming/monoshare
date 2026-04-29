@@ -5,12 +5,21 @@ import NotFoundPresenter from '../presenters/NotFoundPresenter'
 import RegisterPresenter from '../presenters/RegisterPresenter'
 import { isLoggedIn } from '../utils/auth'
 
+// routes.js
 const routes = {
   '/': new HomePresenter(),
   '/*': new NotFoundPresenter(),
   '/monos': new MonoPresenter(),
   '/login': new LoginPresenter(),
   '/register': new RegisterPresenter(),
+}
+
+const routeTitles = {
+  '/': 'Home - monoshare',
+  '/monos': 'Jelajah Peta - monoshare',
+  '/login': 'Login - monoshare',
+  '/register': 'Register - monoshare',
+  '/*': 'Halaman tidak ditemukan - monoshare',
 }
 
 export const getRoute = () => {
@@ -24,9 +33,11 @@ export const getRoute = () => {
     if (!isLoggedIn()) {
       footer.classList.remove('hidden')
       history.replaceState(null, '', '#/login')
+      document.title = routeTitles['/login']
       return routes['/login']
     }
     footer.classList.toggle('hidden', hash === '/monos')
+    document.title = routeTitles[hash]
     return routes[hash]
   }
 
@@ -35,10 +46,13 @@ export const getRoute = () => {
   if (guestRoutes.includes(hash)) {
     if (isLoggedIn()) {
       history.replaceState(null, '', '#/')
+      document.title = routeTitles['/']
       return routes['/']
     }
+    document.title = routeTitles[hash]
     return routes[hash]
   }
 
+  document.title = routeTitles['/*']
   return routes['/*']
 }

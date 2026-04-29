@@ -14,7 +14,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/src/style.css" />
 
-    <title>monoshare</title>
+    <title>Temukan mono di sekitarmu - monoshare</title>
   </head>
   <body class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
     <a
@@ -130,7 +130,11 @@
     <main id="main-content" class="min-h-0">
       <div id="app" class="h-full">
         <div class="h-full flex items-center justify-center">
-          <span class="loading loading-spinner loading-xl"></span>
+          <span
+            class="loading loading-spinner loading-xl"
+            role="status"
+            aria-label="Loading..."
+          ></span>
         </div>
       </div>
     </main>
@@ -147,7 +151,7 @@
         </div>
         <p>Copyright &copy; 2026 - All right reserved</p>
       </section>
-      <nav>
+      <nav aria-label="Tautan sosial">
         <div class="grid grid-flow-col gap-4">
           <a
             href="https://www.linkedin.com/in/frddev/"

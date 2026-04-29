@@ -19,7 +19,7 @@ export default class MonoView {
             <div class="p-2 w-full grid grid-cols-1 bg-base-200 border-b border-base-300 z-10">
               <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
               <div class="col-start-1 row-start-1 flex justify-end">
-                <label for="mono-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost row-start-1">
+                <label for="mono-drawer" aria-label="Buka sidebar" class="btn btn-square btn-ghost row-start-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-panel-left-icon lucide-panel-left h-4 w-4" aria-hidden="true">
@@ -39,6 +39,10 @@ export default class MonoView {
     const drawerLabel = document.querySelector('label[for="mono-drawer"]')
 
     const updateDrawerAria = () => {
+      drawerLabel.setAttribute(
+        'aria-label',
+        drawerCheckbox.checked ? 'Tutup sidebar' : 'Buka sidebar',
+      )
       drawerLabel.setAttribute('aria-expanded', String(drawerCheckbox.checked))
     }
     updateDrawerAria()
@@ -51,7 +55,7 @@ export default class MonoView {
 
     const loadingEl = `
       <div class="h-full flex items-center justify-center">
-          <span class="loading loading-spinner loading-xl"></span>
+          <span class="loading loading-spinner loading-xl" role="status" aria-label="Loading..."></span>
       </div>
     `
 

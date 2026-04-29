@@ -46,7 +46,7 @@ export default class HomeView {
     const monoListEl = document.getElementById('mono-list')
     monoListEl.innerHTML = `
       <div class="h-full flex items-center justify-center">
-          <span class="loading loading-spinner loading-xl"></span>
+          <span class="loading loading-spinner loading-xl" role="status" aria-label="Loading..."></span>
       </div>
     `
   }
