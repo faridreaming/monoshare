@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   details.addEventListener('toggle', () => {
     summary.setAttribute('aria-expanded', String(details.open))
+    summary.setAttribute(
+      'aria-label',
+      details.open ? 'Tutup menu' : 'Buka menu',
+    )
   })
 
   details.querySelectorAll('a').forEach((link) => {
