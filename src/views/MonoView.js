@@ -34,6 +34,15 @@ export default class MonoView {
         </div>
       </div>
     `
+
+    const drawerCheckbox = document.getElementById('mono-drawer')
+    const drawerLabel = document.querySelector('label[for="mono-drawer"]')
+
+    const updateDrawerAria = () => {
+      drawerLabel.setAttribute('aria-expanded', String(drawerCheckbox.checked))
+    }
+    updateDrawerAria()
+    drawerCheckbox.addEventListener('change', updateDrawerAria)
   }
 
   static showLoading() {
@@ -81,19 +90,25 @@ export default class MonoView {
         ${monos
           .map(
             (mono) => `
-            <li class="card card-xs card-side bg-base-200 card-border border-base-300 hover:bg-base-300 w-full min-w-0 overflow-hidden" data-id="${mono.id}">
-              <figure class="w-16 h-16 shrink-0">
-                <img
-                  src="${mono.photoUrl}"
-                  alt="Foto ${mono.name}"
-                  alt="Foto dari ${mono.name}: ${mono.description.substring(0, 50)}..."
-                  loading="lazy" />
-              </figure>
-              <div class="card-body min-w-0">
-                <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
-                <p class="truncate">${mono.description}</p>
-              </div>
-            </li>
+              <li class="w-full min-w-0">
+                <button
+                  type="button"
+                  class="card card-xs card-side bg-base-200 card-border border-base-300 hover:bg-base-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary w-full min-w-0 overflow-hidden text-left"
+                  data-id="${mono.id}"
+                  aria-label="mono dari ${mono.name}">
+                  <figure class="w-16 h-16 shrink-0">
+                    <img
+                      src="${mono.photoUrl}"
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy" />
+                  </figure>
+                  <div class="card-body min-w-0">
+                    <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
+                    <p class="truncate" aria-hidden="true">${mono.description}</p>
+                  </div>
+                </button>
+              </li>
           `,
           )
           .join('')}
@@ -101,9 +116,9 @@ export default class MonoView {
     `
 
     newList.addEventListener('click', (event) => {
-      const monoListItemEl = event.target.closest('li[data-id]')
-      if (!monoListItemEl) return
-      onItemClick(monoListItemEl.dataset.id)
+      const btn = event.target.closest('button[data-id]')
+      if (!btn) return
+      onItemClick(btn.dataset.id)
     })
   }
 }

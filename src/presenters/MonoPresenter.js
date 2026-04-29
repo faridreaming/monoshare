@@ -63,8 +63,6 @@ export default class MonoPresenter {
       this.#markers.set(mono.id, marker)
     })
 
-    console.log(this.#markers)
-
     this.#filterByBounds()
   }
 

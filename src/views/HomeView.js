@@ -2,7 +2,7 @@ export default class HomeView {
   static render(monos = []) {
     const app = document.getElementById('app')
     app.innerHTML = `
-      <section class="relative overflow-hidden min-h-[50dvh] flex items-center">
+      <section aria-label="Hero" class="relative overflow-hidden min-h-[50dvh] flex items-center">
         <div id="map" class="absolute inset-0"></div>
         <div class="absolute inset-0 bg-base-300"></div>
 
@@ -24,10 +24,10 @@ export default class HomeView {
         </div>
       </section>
 
-      <section class="p-8 my-8">
+      <section class="p-8 my-8" aria-labelledby="mono-list-heading">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg md:text-2xl">Daftar <em class="font-bold">mono</em></h2>
-          <button class="btn gap-2 btn-primary btn-sm md:btn-md">
+          <h2 id="mono-list-heading" class="text-lg md:text-2xl">Daftar <em class="font-bold">mono</em></h2>
+          <button type="button" class="btn gap-2 btn-primary btn-sm md:btn-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-plus-icon lucide-plus h-4 w-4" aria-hidden="true">
@@ -111,7 +111,7 @@ export default class HomeView {
                     <img
                       class="aspect-video object-cover w-full"
                       src="${mono.photoUrl}"
-                      alt="Foto dari ${mono.name}: ${mono.description.substring(0, 50)}..."
+                      alt="Foto mono dari ${mono.name}"
                       loading="lazy" />
                   </figure>
                   <div class="card-body p-4 gap-4">
@@ -123,11 +123,11 @@ export default class HomeView {
                           d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                         <circle cx="12" cy="10" r="3" />
                       </svg>
-                      ${mono.lat}, ${mono.lon}
+                      <span class="sr-only">Lokasi: </span>${mono.lat}, ${mono.lon}
                     </span>
                     <p class="italic flex-1">${mono.description?.length > 50 ? `${mono.description.substring(0, 100)}...` : mono.description}</p>
                     <div class="card-actions justify-end">
-                      <button class="btn btn-primary btn-sm" aria-label="Selengkapnya tentang ${mono.description.substring(0, 50)}...">
+                      <button type="button" class="btn btn-primary btn-sm" aria-label="Selengkapnya tentang mono dari ${mono.name}">
                         Selengkapnya
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
