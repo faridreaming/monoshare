@@ -138,10 +138,23 @@
   view-transition-name: main-content;
 }
 
+#map {
+  view-transition-name: hero-map;
+}
+
+#mono-map {
+  view-transition-name: hero-map;
+}
+
 ::view-transition-old(main-content) {
   animation: view-leave 0.15s ease forwards;
 }
 
 ::view-transition-new(main-content) {
   animation: view-enter 0.15s ease forwards;
+}
+
+::view-transition-old(hero-map),
+::view-transition-new(hero-map) {
+  animation: none;
 }
