@@ -26,7 +26,7 @@ export default class HomeView {
       <section class="p-8 my-8" aria-labelledby="mono-list-heading">
         <div class="flex justify-between items-center">
           <h2 id="mono-list-heading" class="text-lg md:text-2xl">Daftar <em class="font-bold">mono</em></h2>
-          <button type="button" class="btn gap-2 btn-primary btn-sm md:btn-md">
+          <a href="#/add" class="btn gap-2 btn-primary btn-sm md:btn-md">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-plus-icon lucide-plus h-4 w-4" aria-hidden="true">
@@ -34,7 +34,7 @@ export default class HomeView {
               <path d="M12 5v14" />
             </svg>
             Tambah <em>mono</em>
-          </button>
+          </a>
         </div>
         <div id="mono-list" class="mt-8"></div>
       </section>

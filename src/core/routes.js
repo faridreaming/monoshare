@@ -19,7 +19,7 @@ const routes = {
 const routeTitles = {
   '/': 'Home - monoshare',
   '/monos': 'Jelajah Peta - monoshare',
-  '/add': 'Tambah Data - monoshare',
+  '/add': 'Tambah mono - monoshare',
   '/login': 'Login - monoshare',
   '/register': 'Register - monoshare',
   '/*': 'Halaman tidak ditemukan - monoshare',
