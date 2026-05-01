@@ -3,8 +3,23 @@ import { setupNavbar } from './utils/navbar'
 import 'leaflet/dist/leaflet.css'
 
 const handleRouteChange = () => {
-  getRoute().init()
-  setupNavbar()
+  if (!document.startViewTransition) {
+    const app = document.getElementById('app')
+    app.style.animation = 'view-leave 0.15s ease forwards'
+
+    setTimeout(() => {
+      getRoute().init()
+      setupNavbar()
+      app.style.animation = 'view-enter 0.15s ease forwards'
+    }, 150)
+
+    return
+  }
+
+  document.startViewTransition(() => {
+    getRoute().init()
+    setupNavbar()
+  })
 }
 
 handleRouteChange()
