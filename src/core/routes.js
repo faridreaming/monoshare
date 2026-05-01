@@ -1,3 +1,4 @@
+import AddMonoPresenter from '../presenters/AddMonoPresenter'
 import HomePresenter from '../presenters/HomePresenter'
 import LoginPresenter from '../presenters/LoginPresenter'
 import MonoPresenter from '../presenters/MonoPresenter'
@@ -8,15 +9,17 @@ import { isLoggedIn } from '../utils/auth'
 // routes.js
 const routes = {
   '/': new HomePresenter(),
-  '/*': new NotFoundPresenter(),
   '/monos': new MonoPresenter(),
+  '/add': new AddMonoPresenter(),
   '/login': new LoginPresenter(),
   '/register': new RegisterPresenter(),
+  '/*': new NotFoundPresenter(),
 }
 
 const routeTitles = {
   '/': 'Home - monoshare',
   '/monos': 'Jelajah Peta - monoshare',
+  '/add': 'Tambah Data - monoshare',
   '/login': 'Login - monoshare',
   '/register': 'Register - monoshare',
   '/*': 'Halaman tidak ditemukan - monoshare',
@@ -26,7 +29,7 @@ export const getRoute = () => {
   const hash = location.hash.slice(1) || '/'
   const footer = document.querySelector('footer')
 
-  const protectedRoutes = ['/', '/monos']
+  const protectedRoutes = ['/', '/monos', '/add']
   const guestRoutes = ['/login', '/register']
 
   if (protectedRoutes.includes(hash)) {
