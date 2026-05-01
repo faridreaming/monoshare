@@ -2,6 +2,7 @@ import L from 'leaflet'
 import MonoView from '../views/MonoView'
 import { getMonos } from '../models/MonoModel'
 import { delay } from '../utils/delay'
+import { getUserLocation } from '../utils/geolocation'
 
 export default class MonoPresenter {
   #monos = []
@@ -20,7 +21,7 @@ export default class MonoPresenter {
       }
 
       this.#monos = data.listStory
-      this.#initMap(this.#monos)
+      await this.#initMap(this.#monos)
       MonoView.renderList(this.#monos, (id) => this.#navigateToMarker(id))
       this.#map.on('moveend', () => {
         this.#filterByBounds()
@@ -31,10 +32,11 @@ export default class MonoPresenter {
     }
   }
 
-  #initMap(monos = this.#monos) {
+  async #initMap(monos = this.#monos) {
     const monoMapEl = document.getElementById('mono-map')
     monoMapEl.innerHTML = ''
-    this.#map = L.map(monoMapEl).setView([-6.2, 106.816], 11)
+    const coords = await getUserLocation([-6.2, 106.816])
+    this.#map = L.map(monoMapEl).setView(coords, 11)
     const monoIcon = L.divIcon({
       className: 'mono-marker',
       html: `

@@ -1,13 +1,14 @@
 import L from 'leaflet'
 import { getMonos } from '../models/MonoModel'
 import HomeView from '../views/HomeView'
+import { getUserLocation } from '../utils/geolocation'
 export default class HomePresenter {
   #map = null
 
   async init() {
     HomeView.render()
     HomeView.showLoading()
-    this.#initMap()
+    await this.#initMap()
 
     try {
       const data = await getMonos({ location: 1, page: 1 })
@@ -24,13 +25,14 @@ export default class HomePresenter {
     }
   }
 
-  #initMap() {
+  async #initMap() {
     const mapEl = document.getElementById('map')
+    const coords = await getUserLocation([-6.2, 106.816])
     this.#map = L.map(mapEl, {
       zoomControl: false,
       dragging: false,
       scrollWheelZoom: false,
-    }).setView([-6.2, 106.816], 11)
+    }).setView(coords, 11)
 
     L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
