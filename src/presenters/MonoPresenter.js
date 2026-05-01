@@ -48,14 +48,41 @@ export default class MonoPresenter {
       popupAnchor: [0, -14],
     })
 
-    L.tileLayer(
+    const darkLayer = L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
       {
         attribution:
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
       },
-    ).addTo(this.#map)
+    )
+
+    const lightLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    )
+
+    const satelliteLayer = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        attribution:
+          'Tiles &copy; <a href="https://www.esri.com">Esri</a> &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      },
+    )
+
+    darkLayer.addTo(this.#map)
+
+    L.control
+      .layers({
+        Dark: darkLayer,
+        Light: lightLayer,
+        Satellite: satelliteLayer,
+      })
+      .addTo(this.#map)
 
     monos.forEach((mono) => {
       const marker = L.marker([mono.lat, mono.lon], { icon: monoIcon })
