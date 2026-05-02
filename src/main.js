@@ -3,6 +3,8 @@ import { setupNavbar } from './utils/navbar'
 import 'leaflet/dist/leaflet.css'
 
 const handleRouteChange = () => {
+  scrollTo({ top: 0, behavior: 'instant' })
+
   if (!document.startViewTransition) {
     const app = document.getElementById('app')
     app.style.animation = 'view-leave 0.15s ease forwards'
