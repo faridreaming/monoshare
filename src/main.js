@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  document.addEventListener('click', (e) => {
-    if (!details.contains(e.target)) {
+  document.addEventListener('click', (event) => {
+    if (!details.contains(event.target)) {
       details.open = false
     }
   })
