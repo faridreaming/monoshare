@@ -3,6 +3,7 @@ import MonoView from '../views/MonoView'
 import { getMonos } from '../models/MonoModel'
 import { delay } from '../utils/delay'
 import { getUserLocation } from '../utils/geolocation'
+import { monoIcon } from '../utils/monoIcon'
 
 export default class MonoPresenter {
   #monos = []
@@ -37,16 +38,6 @@ export default class MonoPresenter {
     monoMapEl.innerHTML = ''
     const coords = await getUserLocation([-6.2, 106.816])
     this.#map = L.map(monoMapEl).setView(coords, 11)
-    const monoIcon = L.divIcon({
-      className: 'mono-marker',
-      html: `
-        <div class="mono-marker__pulse"></div>
-        <div class="mono-marker__core"></div>
-      `,
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
-      popupAnchor: [0, -14],
-    })
 
     const darkLayer = L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
