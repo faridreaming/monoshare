@@ -44,3 +44,21 @@ export async function getStories({ location = 1, page, size } = {}) {
 
   return response.json()
 }
+
+export async function addStory({ description, photo, lat, lon }) {
+  const formData = new FormData()
+  formData.append('description', description)
+  formData.append('photo', photo)
+  formData.append('lat', lat)
+  formData.append('lon', lon)
+
+  const options = {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${getToken()}` },
+    body: formData,
+  }
+
+  const response = await fetch(`${API_URL}/stories`, options)
+
+  return response.json()
+}

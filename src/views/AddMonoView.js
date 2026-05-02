@@ -46,12 +46,26 @@ export default class AddMonoView {
                   <input type="hidden" id="input-lat" />
                   <input type="hidden" id="input-lon" />
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Login</button>
+                <button type="submit" class="btn btn-primary btn-wide mt-2">Tambah <strong class="italic">mono</strong></button>
               </form>
-            <p class="mt-2">Belum punya akun? <a href="#/register" class="link">Register di sini</a></p>
           </div>
         </div>
       </div>
     `
+
+    const form = app.querySelector('form')
+    const descriptionInput = form.querySelector('#description')
+    const inputLat = form.querySelector('#input-lat')
+    const inputLon = form.querySelector('#input-lon')
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      callback({
+        description: descriptionInput.value,
+        lat: inputLat.value,
+        lon: inputLon.value,
+      })
+    })
   }
 }

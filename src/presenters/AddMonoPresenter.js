@@ -1,3 +1,4 @@
+import { addMono } from '../models/MonoModel'
 import { getUserLocation } from '../utils/geolocation'
 import { monoIcon } from '../utils/monoIcon'
 import AddMonoView from '../views/AddMonoView'
@@ -6,12 +7,39 @@ export default class AddMonoPresenter {
   #stream = null
   #map = null
   #marker = null
+  #photoFile = null
 
   async init() {
-    AddMonoView.render()
+    AddMonoView.render(this.#onSubmit)
     this.#setupPhoto()
     await this.#initMap()
     this.#setupCleanup()
+  }
+
+  #onSubmit = async ({ description, lat, lon }) => {
+    if (!this.#photoFile) {
+      alert('Foto wajib diisi!')
+      return
+    }
+
+    try {
+      const data = await addMono({
+        description,
+        photo: this.#photoFile,
+        lat,
+        lon,
+      })
+
+      if (data.error) {
+        alert(`Error: ${data.message}`)
+        return
+      }
+
+      alert(data.message)
+      location.hash = '#/'
+    } catch (error) {
+      alert(`Error: ${error.message}`)
+    }
   }
 
   async #initMap() {
@@ -73,6 +101,7 @@ export default class AddMonoPresenter {
       const file = event.target.files[0]
       if (!file) return
 
+      this.#photoFile = file
       const url = URL.createObjectURL(file)
       previewImg.src = url
       photoPreview.classList.remove('hidden')
@@ -108,10 +137,14 @@ export default class AddMonoPresenter {
 
       canvas.getContext('2d').drawImage(cameraVideo, 0, 0)
 
-      previewImg.src = canvas.toDataURL('image/jpeg')
-      photoPreview.classList.remove('hidden')
-
-      closeCamera()
+      canvas.toBlob((blob) => {
+        this.#photoFile = new File([blob], 'capture.jpg', {
+          type: 'image/jpeg',
+        })
+        previewImg.src = canvas.toDataURL('image/jpeg')
+        photoPreview.classList.remove('hidden')
+        closeCamera()
+      }, 'image/jpeg')
     })
   }
 
