@@ -7,7 +7,7 @@ const handleRouteChange = () => {
     const app = document.getElementById('app')
     app.style.animation = 'view-leave 0.15s ease forwards'
 
-    setTimeout(() => {
+    setTimeout(async () => {
       await getRoute().init()
       setupNavbar()
       app.style.animation = 'view-enter 0.15s ease forwards'
@@ -16,7 +16,7 @@ const handleRouteChange = () => {
     return
   }
 
-  document.startViewTransition(() => {
+  document.startViewTransition(async () => {
     await getRoute().init()
     setupNavbar()
   })
