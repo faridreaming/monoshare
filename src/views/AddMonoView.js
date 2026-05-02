@@ -36,6 +36,16 @@ export default class AddMonoView {
                     <button type="button" id="btn-close-camera" class="hidden btn btn-sm btn-error">Tutup Kamera</button>
                   </div>
                 </div>
+                <div class="flex flex-col gap-2">
+                  <span class="label">Lokasi</span>
+                  <div id="add-map" class="w-full h-96 border border-base-300"></div>
+                  <div class="flex gap-4 text-sm">
+                    <span>Lat: <strong id="selected-lat">-</strong></span>
+                    <span>Lon: <strong id="selected-lon">-</strong></span>
+                  </div>
+                  <input type="hidden" id="input-lat" />
+                  <input type="hidden" id="input-lon" />
+                </div>
                 <button type="submit" class="btn btn-primary mt-2">Login</button>
               </form>
             <p class="mt-2">Belum punya akun? <a href="#/register" class="link">Register di sini</a></p>

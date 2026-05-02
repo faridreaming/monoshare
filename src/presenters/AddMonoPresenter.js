@@ -1,12 +1,56 @@
+import { getUserLocation } from '../utils/geolocation'
+import { monoIcon } from '../utils/monoIcon'
 import AddMonoView from '../views/AddMonoView'
 
 export default class AddMonoPresenter {
   #stream = null
+  #map = null
+  #marker = null
 
-  init() {
+  async init() {
     AddMonoView.render()
     this.#setupPhoto()
+    await this.#initMap()
     this.#setupCleanup()
+  }
+
+  async #initMap() {
+    const selectedLatEl = document.getElementById('selected-lat')
+    const selectedLonEl = document.getElementById('selected-lon')
+    const inputLatEl = document.getElementById('input-lat')
+    const inputLonEl = document.getElementById('input-lon')
+
+    const mapEl = document.getElementById('add-map')
+    const coords = await getUserLocation([-6.2, 106.816])
+    this.#map = L.map(mapEl).setView(coords, 11)
+
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    ).addTo(this.#map)
+
+    this.#map.on('click', (event) => {
+      const { lat, lng } = event.latlng
+      syncLocation([lat, lng])
+    })
+
+    const syncLocation = (coords) => {
+      if (this.#marker) {
+        this.#marker.remove()
+      }
+      this.#marker = L.marker(coords, { icon: monoIcon }).addTo(this.#map)
+
+      inputLatEl.value = coords[0]
+      inputLonEl.value = coords[1]
+      selectedLatEl.textContent = coords[0].toFixed(6)
+      selectedLonEl.textContent = coords[1].toFixed(6)
+    }
+
+    syncLocation(coords)
   }
 
   #setupPhoto() {
