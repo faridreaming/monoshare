@@ -10,15 +10,6 @@ export default class MonoView {
     app.innerHTML = `
       <div class="drawer h-full w-full drawer-open">
         <input id="mono-drawer" type="checkbox" class="drawer-toggle" checked />
-        <div class="drawer-content h-full">
-          <section class="h-full min-h-0 p-4 flex flex-col gap-4">
-            <!-- <div id="mono-filter" class="border border-base-300 bg-base-100 p-3">
-              <button class="btn btn-ghost btn-sm">Filter</button>
-            </div> -->
-
-            <div id="mono-map" class="flex-1 min-h-0 border border-base-300 bg-base-200"></div>
-          </section>
-        </div>
 
         <div class="drawer-side is-drawer-close:overflow-visible overflow-hidden top-[64.8px] h-[calc(100dvh-64.8px)] border-r border-base-300">
           <div class="grid grid-rows-[auto_1fr] h-full min-h-0 is-drawer-close:w-14 is-drawer-open:w-64">
@@ -37,6 +28,16 @@ export default class MonoView {
             </div>
             <div id="mono-list-sidebar" class="min-h-0 overflow-y-auto overflow-x-hidden is-drawer-close:hidden"></div>
           </div>
+        </div>
+
+        <div class="drawer-content h-full">
+          <section class="h-full min-h-0 p-4 flex flex-col gap-4">
+            <!-- <div id="mono-filter" class="border border-base-300 bg-base-100 p-3">
+              <button class="btn btn-ghost btn-sm">Filter</button>
+            </div> -->
+
+            <div id="mono-map" class="flex-1 min-h-0 border border-base-300 bg-base-200"></div>
+          </section>
         </div>
       </div>
     `
