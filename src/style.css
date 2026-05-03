@@ -4,9 +4,9 @@
   --font-sans: 'Space Grotesk', sans-serif;
 }
 
-@plugin "daisyui";
+@plugin "daisyui/index.js";
 
-@plugin "daisyui/theme" {
+@plugin "daisyui/theme/index.js" {
   name: 'mono';
   default: true;
   prefersdark: true;

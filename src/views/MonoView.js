@@ -103,7 +103,7 @@ export default class MonoView {
                   <figure class="w-16 h-16 shrink-0">
                     <img
                       src="${mono.photoUrl}"
-                      alt=""
+                      alt="Foto mono dari ${mono.name}"
                       aria-hidden="true"
                       loading="lazy" />
                   </figure>
