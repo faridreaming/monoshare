@@ -29,6 +29,7 @@ export default class AddMonoView {
                   <canvas id="camera-canvas" class="hidden"></canvas>
 
                   <div class="flex gap-2">
+                    <label for="photo-upload" class="sr-only">Foto</label>
                     <input id="photo-upload" type="file" accept="image/*" class="hidden" />
                     <button type="button" id="btn-upload" class="btn btn-sm btn-outline btn-primary">Upload Gambar</button>
                     <button type="button" id="btn-camera" class="btn btn-sm btn-outline btn-primary">Ambil dari Kamera</button>
