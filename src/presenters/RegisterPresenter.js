@@ -7,6 +7,7 @@ export default class RegisterPresenter {
   }
 
   onSubmit = async ({ name, email, password }) => {
+    RegisterView.showSubmitLoading()
     try {
       const data = await registerUser({ name, email, password })
 
@@ -20,6 +21,8 @@ export default class RegisterPresenter {
       location.hash = '#/login'
     } catch (error) {
       alert(`Error fetching data: ${error}`)
+    } finally {
+      RegisterView.hideSubmitLoading()
     }
   }
 }

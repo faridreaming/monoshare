@@ -7,6 +7,7 @@ export default class LoginPresenter {
   }
 
   onSubmit = async ({ email, password }) => {
+    LoginView.showSubmitLoading()
     try {
       const data = await loginUser({ email, password })
 
@@ -20,6 +21,8 @@ export default class LoginPresenter {
       location.hash = '#/'
     } catch (error) {
       alert(`Error fetching data: ${error}`)
+    } finally {
+      LoginView.hideSubmitLoading()
     }
   }
 }
