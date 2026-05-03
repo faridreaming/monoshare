@@ -5,9 +5,9 @@ export default class HomeView {
     const app = document.getElementById('app')
     app.innerHTML = `
       <section aria-label="Hero" class="relative overflow-hidden min-h-[50dvh] flex items-center">
-        <div id="map" class="absolute inset-0"></div>
+        <div id="map" class="absolute inset-0" aria-hidden="true" inert></div>
 
-        <div class="relative z-9999 flex w-full flex-col items-center justify-center p-6 md:p-10 text-center">
+        <div class="relative z-1000 flex w-full flex-col items-center justify-center p-6 md:p-10 text-center">
           <h1 class="text-lg md:text-2xl">
             Temukan <em class="font-bold">mono</em> di sekitarmu<strong>.</strong>
           </h1>
