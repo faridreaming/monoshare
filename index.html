@@ -16,14 +16,16 @@
 
     <title>Temukan mono di sekitarmu - monoshare</title>
   </head>
+
   <body class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
-    <button
+    <a
+      href="#main-content"
       id="skip-to-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 btn btn-primary"
-      onclick="document.getElementById('main-content').focus()"
+      role="button"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-10000 btn btn-primary"
     >
       Skip to Content
-    </button>
+    </a>
 
     <header class="border-b border-base-300 bg-base-200 sticky top-0 z-9999">
       <nav
@@ -131,7 +133,7 @@
       </nav>
     </header>
 
-    <main id="main-content" tabindex="-1" class="min-h-0">
+    <main id="main-content" tabindex="-1" class="min-h-0 scroll-mt-20">
       <div id="app" class="h-full">
         <div class="h-full flex items-center justify-center">
           <span
