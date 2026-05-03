@@ -1,5 +1,12 @@
+import L from 'leaflet'
+import { monoIcon } from '../utils/monoIcon'
+
 export default class AddMonoView {
-  static render(callback) {
+  static #stream = null
+  static #marker = null
+  static #photoFile = null
+
+  static render(onSubmitCallback) {
     const app = document.getElementById('app')
     app.innerHTML = `
       <div class="flex h-full p-10 justify-center items-center">
@@ -62,11 +69,132 @@ export default class AddMonoView {
     form.addEventListener('submit', (event) => {
       event.preventDefault()
 
-      callback({
+      onSubmitCallback({
         description: descriptionInput.value,
+        photo: AddMonoView.#photoFile,
         lat: inputLat.value,
         lon: inputLon.value,
       })
     })
+  }
+
+  static setupPhoto() {
+    const btnUpload = document.getElementById('btn-upload')
+    const photoUpload = document.getElementById('photo-upload')
+    const previewImg = document.getElementById('preview-img')
+    const photoPreview = document.getElementById('photo-preview')
+    const btnCamera = document.getElementById('btn-camera')
+    const btnCapture = document.getElementById('btn-capture')
+    const btnCloseCamera = document.getElementById('btn-close-camera')
+    const cameraView = document.getElementById('camera-view')
+    const cameraVideo = document.getElementById('camera-video')
+    const canvas = document.getElementById('camera-canvas')
+
+    btnUpload.addEventListener('click', () => {
+      photoUpload.click()
+    })
+
+    photoUpload.addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      if (!file) return
+
+      AddMonoView.#photoFile = file
+      const url = URL.createObjectURL(file)
+      previewImg.src = url
+      photoPreview.classList.remove('hidden')
+    })
+
+    btnCamera.addEventListener('click', async () => {
+      AddMonoView.#stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      cameraVideo.srcObject = AddMonoView.#stream
+
+      photoPreview.classList.add('hidden')
+      cameraView.classList.remove('hidden')
+      btnCapture.classList.remove('hidden')
+      btnCloseCamera.classList.remove('hidden')
+      btnCamera.classList.add('hidden')
+    })
+
+    const closeCamera = () => {
+      AddMonoView.#stream.getTracks().forEach((track) => track.stop())
+      AddMonoView.#stream = null
+      cameraVideo.srcObject = null
+
+      cameraView.classList.add('hidden')
+      btnCapture.classList.add('hidden')
+      btnCloseCamera.classList.add('hidden')
+      btnCamera.classList.remove('hidden')
+    }
+
+    btnCloseCamera.addEventListener('click', closeCamera)
+
+    btnCapture.addEventListener('click', () => {
+      canvas.width = cameraVideo.videoWidth
+      canvas.height = cameraVideo.videoHeight
+
+      canvas.getContext('2d').drawImage(cameraVideo, 0, 0)
+
+      canvas.toBlob((blob) => {
+        AddMonoView.#photoFile = new File([blob], 'capture.jpg', {
+          type: 'image/jpeg',
+        })
+        previewImg.src = canvas.toDataURL('image/jpeg')
+        photoPreview.classList.remove('hidden')
+        closeCamera()
+      }, 'image/jpeg')
+    })
+  }
+
+  static initMap(coords) {
+    const selectedLatEl = document.getElementById('selected-lat')
+    const selectedLonEl = document.getElementById('selected-lon')
+    const inputLatEl = document.getElementById('input-lat')
+    const inputLonEl = document.getElementById('input-lon')
+
+    const mapEl = document.getElementById('add-map')
+    const map = L.map(mapEl).setView(coords, 11)
+
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    ).addTo(map)
+
+    const syncLocation = (locationCoords) => {
+      if (AddMonoView.#marker) {
+        AddMonoView.#marker.remove()
+      }
+      AddMonoView.#marker = L.marker(locationCoords, { icon: monoIcon }).addTo(map)
+
+      inputLatEl.value = locationCoords[0]
+      inputLonEl.value = locationCoords[1]
+      selectedLatEl.textContent = locationCoords[0].toFixed(6)
+      selectedLonEl.textContent = locationCoords[1].toFixed(6)
+    }
+
+    map.on('click', (event) => {
+      const { lat, lng } = event.latlng
+      syncLocation([lat, lng])
+    })
+
+    syncLocation(coords)
+
+    return map
+  }
+
+  static setupCleanup() {
+    window.addEventListener(
+      'hashchange',
+      () => {
+        if (AddMonoView.#stream) {
+          AddMonoView.#stream.getTracks().forEach((track) => track.stop())
+          AddMonoView.#stream = null
+        }
+      },
+      { once: true },
+    )
   }
 }

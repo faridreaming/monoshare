@@ -1,4 +1,4 @@
-import { register } from '../services/storyService'
+import { registerUser } from '../models/AuthModel'
 import RegisterView from '../views/RegisterView'
 
 export default class RegisterPresenter {
@@ -8,7 +8,7 @@ export default class RegisterPresenter {
 
   onSubmit = async ({ name, email, password }) => {
     try {
-      const data = await register({ name, email, password })
+      const data = await registerUser({ name, email, password })
 
       if (data.error) {
         alert(`Error: ${data.message}`)
