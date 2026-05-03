@@ -23,7 +23,7 @@ export default class MonoView {
         <div class="drawer-side is-drawer-close:overflow-visible overflow-hidden top-[64.8px] h-[calc(100dvh-64.8px)] border-r border-base-300">
           <div class="grid grid-rows-[auto_1fr] h-full min-h-0 is-drawer-close:w-14 is-drawer-open:w-64">
             <div class="p-2 w-full grid grid-cols-1 bg-base-200 border-b border-base-300 z-10">
-              <h2 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h2>
+              <h1 class="is-drawer-close:hidden text-center col-start-1 row-start-1 self-center text-sm">Daftar <em class="font-bold">mono</em></h1>
               <div class="col-start-1 row-start-1 flex justify-end">
                 <label for="mono-drawer" aria-label="Buka sidebar" class="btn btn-square btn-ghost row-start-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -186,7 +186,7 @@ export default class MonoView {
                       loading="lazy" />
                   </figure>
                   <div class="card-body min-w-0">
-                    <h3 class="card-title truncate line-clamp-1">${mono.name}</h3>
+                    <h2 class="card-title truncate line-clamp-1">${mono.name}</h2>
                     <p class="truncate" aria-hidden="true">${mono.description}</p>
                   </div>
                 </button>
