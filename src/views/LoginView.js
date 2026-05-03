@@ -25,7 +25,7 @@ export default class LoginView {
                     required minlength="8" />
                   <p id="password-hint" class="validator-hint hidden m-0">Minimal 8 karakter</p>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Login</button>
+                <button id="btn-submit" type="submit" class="btn btn-primary mt-2">Login</button>
               </form>
             <p class="mt-2">Belum punya akun? <a href="#/register" class="link">Register di sini</a></p>
           </div>
@@ -43,5 +43,18 @@ export default class LoginView {
       const password = passwordInput.value
       callback({ email, password })
     })
+  }
+
+  static showSubmitLoading() {
+    const btn = document.getElementById('btn-submit')
+    btn.disabled = true
+    btn.dataset.label = btn.textContent
+    btn.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Loading...'
+  }
+
+  static hideSubmitLoading() {
+    const btn = document.getElementById('btn-submit')
+    btn.disabled = false
+    btn.textContent = btn.dataset.label
   }
 }

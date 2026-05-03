@@ -19,6 +19,7 @@ export default class AddMonoPresenter {
       return
     }
 
+    AddMonoView.showSubmitLoading()
     try {
       const data = await addMono({
         description,
@@ -36,6 +37,8 @@ export default class AddMonoPresenter {
       location.hash = '#/'
     } catch (error) {
       alert(`Error: ${error.message}`)
+    } finally {
+      AddMonoView.hideSubmitLoading()
     }
   }
 }

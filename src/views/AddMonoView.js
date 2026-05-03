@@ -54,7 +54,7 @@ export default class AddMonoView {
                   <input type="hidden" id="input-lat" />
                   <input type="hidden" id="input-lon" />
                 </div>
-                <button type="submit" class="btn btn-primary btn-wide mt-2">Tambah <strong class="italic">mono</strong></button>
+                <button id="btn-submit" type="submit" class="btn btn-primary btn-wide mt-2">Tambah <strong class="italic">mono</strong></button>
               </form>
           </div>
         </div>
@@ -196,5 +196,18 @@ export default class AddMonoView {
       },
       { once: true },
     )
+  }
+
+  static showSubmitLoading() {
+    const btn = document.getElementById('btn-submit')
+    btn.disabled = true
+    btn.dataset.label = btn.innerHTML
+    btn.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Loading...'
+  }
+
+  static hideSubmitLoading() {
+    const btn = document.getElementById('btn-submit')
+    btn.disabled = false
+    btn.innerHTML = btn.dataset.label
   }
 }
