@@ -1,5 +1,7 @@
+import L from 'leaflet'
+
 export default class HomeView {
-  static render(monos = []) {
+  static render() {
     const app = document.getElementById('app')
     app.innerHTML = `
       <section aria-label="Hero" class="relative overflow-hidden min-h-[50dvh] flex items-center">
@@ -53,6 +55,26 @@ export default class HomeView {
   static hideLoading() {
     const monoListEl = document.getElementById('mono-list')
     monoListEl.innerHTML = ''
+  }
+
+  static initMap(coords) {
+    const mapEl = document.getElementById('map')
+    const map = L.map(mapEl, {
+      zoomControl: false,
+      dragging: false,
+      scrollWheelZoom: false,
+    }).setView(coords, 11)
+
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    ).addTo(map)
+
+    return map
   }
 
   static renderList(monos = []) {

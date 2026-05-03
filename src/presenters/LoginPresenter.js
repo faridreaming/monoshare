@@ -1,5 +1,4 @@
-import { login } from '../services/storyService'
-import { setToken } from '../utils/auth'
+import { loginUser } from '../models/AuthModel'
 import LoginView from '../views/LoginView'
 
 export default class LoginPresenter {
@@ -9,7 +8,7 @@ export default class LoginPresenter {
 
   onSubmit = async ({ email, password }) => {
     try {
-      const data = await login({ email, password })
+      const data = await loginUser({ email, password })
 
       if (data.error) {
         alert(`Error: ${data.message}`)
@@ -17,8 +16,6 @@ export default class LoginPresenter {
       }
 
       alert(data.message)
-
-      setToken(data.loginResult.token)
 
       location.hash = '#/'
     } catch (error) {

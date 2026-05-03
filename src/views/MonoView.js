@@ -1,4 +1,10 @@
+import L from 'leaflet'
+import { monoIcon } from '../utils/monoIcon'
+
 export default class MonoView {
+  static #map = null
+  static #markers = new Map()
+
   static render() {
     const app = document.getElementById('app')
     app.innerHTML = `
@@ -66,6 +72,78 @@ export default class MonoView {
   static hideLoading() {
     const monoListSidebarEl = document.getElementById('mono-list-sidebar')
     monoListSidebarEl.innerHTML = ''
+  }
+
+  static initMap(coords, monos = []) {
+    const monoMapEl = document.getElementById('mono-map')
+    monoMapEl.innerHTML = ''
+
+    MonoView.#map = L.map(monoMapEl).setView(coords, 11)
+
+    const darkLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    )
+
+    const lightLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+      },
+    )
+
+    const satelliteLayer = L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        attribution:
+          'Tiles &copy; <a href="https://www.esri.com">Esri</a> &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      },
+    )
+
+    darkLayer.addTo(MonoView.#map)
+
+    L.control
+      .layers({
+        Dark: darkLayer,
+        Light: lightLayer,
+        Satellite: satelliteLayer,
+      })
+      .addTo(MonoView.#map)
+
+    MonoView.#markers = new Map()
+
+    monos.forEach((mono) => {
+      const marker = L.marker([mono.lat, mono.lon], { icon: monoIcon })
+        .addTo(MonoView.#map)
+        .bindPopup(mono.name)
+
+      MonoView.#markers.set(mono.id, marker)
+    })
+
+    return MonoView.#map
+  }
+
+  static getVisibleMonos(monos) {
+    const bounds = MonoView.#map.getBounds()
+    return monos.filter((mono) => bounds.contains([mono.lat, mono.lon]))
+  }
+
+  static navigateToMarker(id) {
+    const marker = MonoView.#markers.get(id)
+    if (!marker) return
+    const markerLatLng = marker.getLatLng()
+    MonoView.#map.flyTo(markerLatLng)
+    marker.openPopup()
+  }
+
+  static onMapMoveEnd(callback) {
+    MonoView.#map.on('moveend', callback)
   }
 
   static renderList(monos = [], onItemClick = () => {}) {
