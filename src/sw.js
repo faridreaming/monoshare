@@ -53,6 +53,39 @@ registerRoute(
   }),
 )
 
+self.addEventListener('push', (event) => {
+  let data = {
+    title: 'Monoshare',
+    body: 'Ada data baru ditambahkan!',
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/icon-72x72.png',
+  }
+
+  if (event.data) {
+    try {
+      const payload = event.data.json()
+      data = {
+        title: payload.title || data.title,
+        body: payload.body || data.body,
+        icon: payload.icon || data.icon,
+        badge: payload.badge || data.badge,
+        data: payload.data || {},
+      }
+    } catch {
+      data.body = event.data.text()
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      badge: data.badge,
+      data: data.data,
+    }),
+  )
+})
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
   if (event.action === 'dismiss') return
