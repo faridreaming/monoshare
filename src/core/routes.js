@@ -1,12 +1,12 @@
 import AddMonoPresenter from '../presenters/AddMonoPresenter'
 import HomePresenter from '../presenters/HomePresenter'
 import LoginPresenter from '../presenters/LoginPresenter'
+import MonoDetailPresenter from '../presenters/MonoDetailPresenter'
 import MonoPresenter from '../presenters/MonoPresenter'
 import NotFoundPresenter from '../presenters/NotFoundPresenter'
 import RegisterPresenter from '../presenters/RegisterPresenter'
 import { isLoggedIn } from '../utils/auth'
 
-// routes.js
 const routes = {
   '/': new HomePresenter(),
   '/monos': new MonoPresenter(),
@@ -28,6 +28,19 @@ const routeTitles = {
 export const getRoute = () => {
   const hash = location.hash.slice(1) || '/'
   const footer = document.querySelector('footer')
+
+  const monoDetailMatch = hash.match(/^\/monos\/(.+)$/)
+  if (monoDetailMatch) {
+    const id = monoDetailMatch[1]
+    if (!isLoggedIn()) {
+      history.replaceState(null, '', '#/login')
+      document.title = routeTitles['/login']
+      return routes['/login']
+    }
+    footer.classList.remove('hidden')
+    document.title = 'Detail mono - monoshare'
+    return new MonoDetailPresenter(id)
+  }
 
   const protectedRoutes = ['/', '/monos', '/add']
   const guestRoutes = ['/login', '/register']

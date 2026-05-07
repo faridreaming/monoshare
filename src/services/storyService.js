@@ -62,3 +62,16 @@ export async function addStory({ description, photo, lat, lon }) {
 
   return response.json()
 }
+
+export async function getStoryById(id) {
+  const token = getToken()
+
+  const options = {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
+  const response = await fetch(`${API_URL}/stories/${id}`, options)
+
+  return response.json()
+}

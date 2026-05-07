@@ -38,17 +38,21 @@ self.addEventListener('notificationclick', (event) => {
 
   if (event.action === 'dismiss') return
 
+  const id = event.notification.data?.id
+  const url = id ? `/#/monos/${id}` : '/'
+
   event.waitUntil(
     self.clients
       .matchAll({ type: 'window', includeUncontrolled: true })
       .then((clients) => {
         for (const client of clients) {
           if (client.url.includes(self.location.origin) && 'focus' in client) {
-            return client.focus()
+            client.focus()
+            return client.navigate(url)
           }
         }
         if (self.clients.openWindow) {
-          return self.clients.openWindow('/')
+          return self.clients.openWindow(url)
         }
       }),
   )

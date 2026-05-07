@@ -1,4 +1,4 @@
-import { addStory, getStories } from '../services/storyService'
+import { addStory, getStories, getStoryById } from '../services/storyService'
 
 export async function getMonos({ location = 1, page, size } = {}) {
   const options = { location }
@@ -9,4 +9,8 @@ export async function getMonos({ location = 1, page, size } = {}) {
 
 export async function addMono({ description, photo, lat, lon }) {
   return addStory({ description, photo, lat, lon })
+}
+
+export async function getMono(id) {
+  return getStoryById(id)
 }
