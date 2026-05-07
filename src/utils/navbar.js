@@ -1,6 +1,7 @@
 import { isLoggedIn, removeToken } from './auth'
+import PushPresenter from '../presenters/PushPresenter'
 
-export function setupNavbar() {
+export async function setupNavbar() {
   const navbarMobileDropdown = document.getElementById('navbar-mobile-dropdown')
   const navbarDesktopMenu = document.getElementById('navbar-desktop-menu')
   const authAction = document.getElementById('auth-action')
@@ -58,30 +59,59 @@ export function setupNavbar() {
       </li>
     `
     authAction.innerHTML = `
-      <button
-        id="logout-button"
-        class="btn btn-error gap-2 btn-xs md:btn-sm"
-      >
-        <svg
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-log-out-icon lucide-log-out h-3 w-3"
+      <div class="flex items-center gap-2">
+        <div id="push-toggle-container"></div>
+        <button
+          id="logout-button"
+          class="btn btn-error gap-2 btn-xs md:btn-sm"
         >
-          <path d="m16 17 5-5-5-5" />
-          <path d="M21 12H9" />
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-        </svg>
-        Logout
-      </button>
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-log-out-icon lucide-log-out h-3 w-3"
+          >
+            <path d="m16 17 5-5-5-5" />
+            <path d="M21 12H9" />
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          </svg>
+          Logout
+        </button>
+      </div>
     `
+
+    const container = document.getElementById('push-toggle-container')
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'btn btn-secondary btn-xs md:btn-sm gap-2'
+    container.appendChild(btn)
+
+    const pushView = {
+      update(subscribed) {
+        btn.disabled = false
+        btn.setAttribute('aria-pressed', String(subscribed))
+        btn.innerHTML = subscribed
+          ? `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell h-4 w-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg> <span class="hidden md:inline">Notifikasi Aktif</span>`
+          : `<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-off-icon lucide-bell-off h-4 w-4"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M17 17H4a1 1 0 0 1-.74-1.673C4.59 13.956 6 12.499 6 8a6 6 0 0 1 .258-1.742"/><path d="m2 2 20 20"/><path d="M8.668 3.01A6 6 0 0 1 18 8c0 2.687.77 4.653 1.707 6.05"/></svg> <span class="hidden md:inline">Aktifkan Notifikasi</span>`
+        btn.classList.toggle('btn-primary!', subscribed)
+      },
+      setLoading() {
+        btn.disabled = true
+        btn.innerHTML = `<span class="loading loading-spinner loading-xs"></span>`
+      },
+    }
+
+    const pushPresenter = new PushPresenter(pushView)
+    await pushPresenter.init()
+
+    btn.addEventListener('click', () => pushPresenter.toggle())
 
     const logoutButton = authAction.querySelector('#logout-button')
 

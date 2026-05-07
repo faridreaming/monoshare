@@ -45,7 +45,7 @@ const handleRouteChange = () => {
 
     setTimeout(async () => {
       await getRoute().init()
-      setupNavbar()
+      await setupNavbar()
       setupSkipLink()
       app.style.animation = 'view-enter 0.15s ease forwards'
     }, 150)
@@ -55,7 +55,7 @@ const handleRouteChange = () => {
 
   document.startViewTransition(async () => {
     await getRoute().init()
-    setupNavbar()
+    await setupNavbar()
     setupSkipLink()
   })
 }
@@ -91,5 +91,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  setupNavbar()
+  await setupNavbar()
 })
