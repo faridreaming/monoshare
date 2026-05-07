@@ -1,6 +1,7 @@
 import { getRoute } from './core/routes'
 import { setupNavbar } from './utils/navbar'
 import 'leaflet/dist/leaflet.css'
+import { registerServiceWorker } from './utils/serviceWorker'
 
 const setupSkipLink = () => {
   const skipLink = document.getElementById('skip-to-content')
@@ -63,6 +64,8 @@ handleRouteChange()
 window.addEventListener('hashchange', handleRouteChange)
 
 document.addEventListener('DOMContentLoaded', () => {
+  await registerServiceWorker()
+  
   const details = document.querySelector('details.dropdown')
   if (details) {
     const summary = details.querySelector('summary')
