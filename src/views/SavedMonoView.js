@@ -9,14 +9,14 @@ export default class SavedMonoView {
           </h1>
           <div class="flex gap-2 items-center flex-wrap">
             <div class="join">
+              <label for="search-input" class="sr-only">Cari mono tersimpan</label>
               <input
                 id="search-input"
                 type="search"
                 class="input input-bordered join-item input-sm"
                 placeholder="Cari nama / deskripsi..."
-                aria-label="Cari mono tersimpan"
               />
-              <button id="search-btn" class="btn btn-sm join-item btn-primary">
+              <button id="search-btn" class="btn btn-sm join-item btn-primary" aria-label="Cari">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                   aria-hidden="true">
@@ -24,7 +24,8 @@ export default class SavedMonoView {
                 </svg>
               </button>
             </div>
-            <select id="sort-select" class="select select-sm select-bordered" aria-label="Urutkan mono">
+            <label for="sort-select" class="sr-only">Urutkan mono</label>
+            <select id="sort-select" class="select select-sm select-bordered">
               <option value="newest">Terbaru</option>
               <option value="oldest">Terlama</option>
               <option value="name-az">Nama A–Z</option>
@@ -74,7 +75,7 @@ export default class SavedMonoView {
           <li class="card bg-base-300 w-full shadow-sm">
             <div class="flex items-center gap-2 p-4">
               <div class="avatar avatar-placeholder">
-                <div class="bg-neutral text-neutral-content w-12 rounded-full text-lg font-bold">
+                <div class="bg-neutral text-neutral-content w-12 rounded-full text-lg font-bold" aria-hidden="true">
                   ${mono.name
                     .trim()
                     .split(/\s+/)
@@ -85,7 +86,7 @@ export default class SavedMonoView {
                 </div>
               </div>
               <div>
-                <h3 class="card-title">${mono.name}</h3>
+                <h2 class="card-title">${mono.name}</h2>
                 <time datetime="${mono.createdAt}" class="text-xs">
                   ${new Date(mono.createdAt)
                     .toLocaleString('id-ID', {
