@@ -63,9 +63,9 @@ const handleRouteChange = () => {
 handleRouteChange()
 window.addEventListener('hashchange', handleRouteChange)
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   await registerServiceWorker()
-  
+
   const details = document.querySelector('details.dropdown')
   if (details) {
     const summary = details.querySelector('summary')
