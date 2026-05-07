@@ -148,7 +148,7 @@ export default class HomeView {
                     </span>
                     <p class="italic flex-1">${mono.description?.length > 50 ? `${mono.description.substring(0, 100)}...` : mono.description}</p>
                     <div class="card-actions justify-end">
-                      <button type="button" class="btn btn-primary btn-sm" aria-label="Selengkapnya tentang mono dari ${mono.name}">
+                      <a href="#/monos/${mono.id}" class="btn btn-primary btn-sm" aria-label="Selengkapnya tentang mono dari ${mono.name}">
                         Selengkapnya
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -156,7 +156,7 @@ export default class HomeView {
                           <path d="M5 12h14" />
                           <path d="m12 5 7 7-7 7" />
                         </svg>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </li>
