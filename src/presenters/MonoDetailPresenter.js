@@ -22,7 +22,7 @@ export default class MonoDetailPresenter {
         throw new Error(data.message)
       }
 
-      MonoDetailView.renderDetail(data.story)
+      await MonoDetailView.renderDetail(data.story)
     } catch (error) {
       MonoDetailView.renderError(error.message)
     }

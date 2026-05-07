@@ -1,3 +1,9 @@
+import {
+  saveMonoToLocal,
+  removeSavedMono,
+  checkIsMonoSaved,
+} from '../models/SavedMonoModel'
+
 export default class MonoDetailView {
   static render() {
     const app = document.getElementById('app')
@@ -8,8 +14,10 @@ export default class MonoDetailView {
     `
   }
 
-  static renderDetail(mono) {
+  static async renderDetail(mono) {
     const app = document.getElementById('app')
+    const isSaved = await checkIsMonoSaved(mono.id)
+
     app.innerHTML = `
       <section class="max-w-2xl mx-auto p-8 flex flex-col gap-6">
         <a href="#/" class="btn btn-ghost btn-sm self-start gap-2">
@@ -65,10 +73,85 @@ export default class MonoDetailView {
               </svg>
               ${mono.lat}, ${mono.lon}
             </span>
+            <div class="card-actions justify-end">
+              <button
+                id="btn-save"
+                class="btn btn-sm ${isSaved ? 'btn-primary' : 'btn-secondary'}"
+                aria-pressed="${isSaved}"
+                aria-label="${isSaved ? 'Hapus dari tersimpan' : 'Simpan mono ini'}">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-bookmark-icon lucide-bookmark h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+                  />
+                </svg>
+                ${isSaved ? 'Tersimpan' : 'Simpan'}
+              </button>
+            </div>
           </div>
         </div>
       </section>
     `
+
+    MonoDetailView.#setupSaveButton(mono, isSaved)
+  }
+
+  static #setupSaveButton(mono, initialSaved) {
+    const btn = document.getElementById('btn-save')
+    if (!btn) return
+
+    let saved = initialSaved
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true
+
+      if (saved) {
+        await removeSavedMono(mono.id)
+        saved = false
+      } else {
+        await saveMonoToLocal(mono)
+        saved = true
+      }
+
+      btn.disabled = false
+      btn.setAttribute('aria-pressed', String(saved))
+      btn.setAttribute(
+        'aria-label',
+        saved ? 'Hapus dari tersimpan' : 'Simpan mono ini',
+      )
+      btn.className = `btn btn-sm ${saved ? 'btn-primary' : 'btn-secondary'}`
+      btn.innerHTML = `
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-bookmark-icon lucide-bookmark h-4 w-4"
+          aria-hidden="true"
+        >
+          <path
+            d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"
+          />
+        </svg>
+        ${saved ? 'Tersimpan' : 'Simpan'}
+      `
+    })
   }
 
   static renderError(message) {

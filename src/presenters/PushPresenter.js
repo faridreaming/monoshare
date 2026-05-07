@@ -31,6 +31,7 @@ export default class PushPresenter {
     } catch (error) {
       const actual = await getSubscriptionStatus()
       this.#view.update(actual)
+      console.error(error)
       alert(error.message)
     }
   }

@@ -5,12 +5,14 @@ import MonoDetailPresenter from '../presenters/MonoDetailPresenter'
 import MonoPresenter from '../presenters/MonoPresenter'
 import NotFoundPresenter from '../presenters/NotFoundPresenter'
 import RegisterPresenter from '../presenters/RegisterPresenter'
+import SavedMonoPresenter from '../presenters/SavedMonoPresenter'
 import { isLoggedIn } from '../utils/auth'
 
 const routes = {
   '/': new HomePresenter(),
   '/monos': new MonoPresenter(),
   '/add': new AddMonoPresenter(),
+  '/saved': new SavedMonoPresenter(),
   '/login': new LoginPresenter(),
   '/register': new RegisterPresenter(),
   '/*': new NotFoundPresenter(),
@@ -20,6 +22,7 @@ const routeTitles = {
   '/': 'Home - monoshare',
   '/monos': 'Jelajah Peta - monoshare',
   '/add': 'Tambah mono - monoshare',
+  '/saved': 'mono Tersimpan - monoshare',
   '/login': 'Login - monoshare',
   '/register': 'Register - monoshare',
   '/*': 'Halaman tidak ditemukan - monoshare',
@@ -42,7 +45,7 @@ export const getRoute = () => {
     return new MonoDetailPresenter(id)
   }
 
-  const protectedRoutes = ['/', '/monos', '/add']
+  const protectedRoutes = ['/', '/monos', '/add', '/saved']
   const guestRoutes = ['/login', '/register']
 
   if (protectedRoutes.includes(hash)) {
