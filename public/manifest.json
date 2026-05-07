@@ -1,0 +1,84 @@
+{
+  "name": "monoshare - Temukan mono di sekitarmu",
+  "short_name": "monoshare",
+  "description": "Temukan dan bagikan mono di sekitarmu",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "2560x1440",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Home monoshare"
+    },
+    {
+      "src": "/screenshots/map.png",
+      "sizes": "2560x1440",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Jelajah Peta monoshare"
+    },
+    {
+      "src": "/screenshots/form.png",
+      "sizes": "2560x1440",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Halaman Tambah mono"
+    },
+    {
+      "src": "/screenshots/home-mobile.png",
+      "sizes": "780x1768",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Halaman Home monoshare di mobile"
+    },
+    {
+      "src": "/screenshots/map-mobile.png",
+      "sizes": "780x1768",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Halaman Jelajah Peta di mobile"
+    },
+    {
+      "src": "/screenshots/form-mobile.png",
+      "sizes": "780x1768",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Halaman Tambah mono di mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tambah mono",
+      "short_name": "Tambah",
+      "description": "Tambah mono baru",
+      "url": "/#/add",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Jelajah Peta",
+      "short_name": "Peta",
+      "description": "Jelajahi mono di peta",
+      "url": "/#/monos",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
